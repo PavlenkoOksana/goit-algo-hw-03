@@ -20,22 +20,15 @@ def read_directory(path, destination_dir):
             except Exception as e:
                 print(f"\033[31m Виникла помилка: {e} \033[0m")
         else:
-            copy_file(element_path, destination_dir)
-
-def copy_file(file_path, destination_dir):
-    if not os.path.isfile(file_path):
-        print(f"\033[31m Помилка виконання: {file_path} не є файлом \033[0m")
-        return
-
-    extension = os.path.splitext(file_path)[1][1:] 
-    destination_subdir = os.path.join(destination_dir, extension)
-    os.makedirs(destination_subdir, exist_ok=True)
-
-    try:
-        shutil.copy(file_path, destination_subdir)
-        print(f"Копіюю '{os.path.basename(file_path)}' в '{destination_subdir}'")
-    except Exception as e:
-        print(f"\033[31m Не вдалося скопіювати '{os.path.basename(file_path)}': {e} \033[0m")
+            extension = os.path.splitext(element)[1][1:] 
+            destination_subdir = os.path.join(destination_dir, extension)
+            os.makedirs(destination_subdir, exist_ok=True)
+            try:
+                shutil.copy(element_path, destination_subdir)                  
+            except Exception as e:
+                print(f"\033[31m Не вдалося скопіювати '{element}': {e} \033[0m")
+            else:
+                print(f"Копіюю '{element}' в '{destination_subdir}'")
 
 def copy_files(source_dir, destination_dir):
     if not os.path.isdir(source_dir):
@@ -58,9 +51,9 @@ def main():
     destination_directory = args.destination_dir
 
     copy_files(source_directory, destination_directory)
+    
 
 if __name__ == "__main__":
     main()
 
-
-# python3 D:\Projects\My_Repository\goit-algo-hw-03\goit-algo-hw-03\hw1.py C:/Users/kompik/Downloads/1 C:/Users/kompik/Downloads/1_Copy
+# python3 D:\Projects\My_Repository\goit-algo-hw-03\goit-algo-hw-03\hw1-1.py C:/Users/kompik/Downloads/1 C:/Users/kompik/Downloads/1_Copy
